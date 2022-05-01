@@ -24,8 +24,8 @@
 		});
 
     async function run(instance, module) {
-			await WebAssembly.instantiate(module, go.importObject);
       await go.run(instance);
+			await WebAssembly.instantiate(module, go.importObject);
     }
   </script>
   <title>WebAssembly Test</title>
