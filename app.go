@@ -6,6 +6,7 @@ import(
 	"net/http"
 	"path/filepath"
 	"flag"
+	"runtime"
 
 	"github.com/labstack/echo/v4"
 )
@@ -30,6 +31,7 @@ func main() {
 	renderer := &T{template.Must(template.ParseGlob(filepath.Join("public", "views", "*.html")))}
 
 	app.Static("/static", filepath.Join("public", "static"))
+	app.File("/misc/wasm_exec.js", filepath.Join(runtime.GOROOT(), "misc", "wasm", "wasm_exec.js"))
 	app.File("/bin/go.wasm", filepath.Join("bin", "go.wasm"))
 
 	app.Renderer = renderer
