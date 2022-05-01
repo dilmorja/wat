@@ -40,5 +40,5 @@ func main() {
 		})
 	})
 
-	app.Start(*FPORT)
+	app.Start(":" + *FPORT)
 }
