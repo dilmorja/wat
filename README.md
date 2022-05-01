@@ -22,6 +22,8 @@ $ cd wat
 $ go mod tidy
 # Compile app
 $ make build
+# Run
+$ ./wat.exe
 ```
 
 > **WARNING**: This way of compiling changes the environment variables. Before you build, make sure you know what the values are for your operating system and architecture. After compiling, set it to its default values: `go env -w GOOS=[your OS] GOARCH=[your arch]`.
