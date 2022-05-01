@@ -1,0 +1,38 @@
+{{define "Home"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="/static/js/wasm_exec.js"></script>
+  <script>
+    if (!WebAssembly.instantiateStreaming) { // polyfill
+			WebAssembly.instantiateStreaming = async (resp, importObject) => {
+				const source = await (await resp).arrayBuffer();
+				return await WebAssembly.instantiate(source, importObject);
+			};
+		}
+
+		const go = new Go();
+		var mod, inst;
+		WebAssembly.instantiateStreaming(fetch("/bin/go.wasm"), go.importObject).then((result) => {
+			run(result.instance, result.module)
+		}).catch((err) => {
+			console.error(err);
+		});
+
+    async function run(instance, module) {
+			await WebAssembly.instantiate(module, go.importObject);
+      await go.run(instance);
+    }
+  </script>
+  <title>WebAssembly Test</title>
+</head>
+<body>
+  <p id="texto">Hello, {{.name}}!</p>
+  <button id="boton">Click me!</button>
+</body>
+</html>
+{{end}}
