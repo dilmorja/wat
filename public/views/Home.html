@@ -16,7 +16,7 @@
 		}
 
 		const go = new Go();
-		var mod, inst;
+
 		WebAssembly.instantiateStreaming(fetch("/bin/go.wasm"), go.importObject).then((result) => {
 			run(result.instance, result.module)
 		}).catch((err) => {
